@@ -1,0 +1,13 @@
+{
+  "name": "mdread — markdown reader",
+  "short_name": "mdread",
+  "description": "A local-first, privacy-first markdown reader. Drop a file or folder, read beautifully, edit, and download — all on your device.",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#faf6ee",
+  "theme_color": "#faf6ee",
+  "icons": [
+    { "src": "./icons/icon.svg", "type": "image/svg+xml", "sizes": "any", "purpose": "any maskable" }
+  ]
+}

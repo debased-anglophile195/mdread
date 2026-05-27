@@ -1,0 +1,15 @@
+{
+  "name": "mdread",
+  "version": "1.0.0",
+  "private": true,
+  "description": "A local-first markdown reader you can host on Cloudflare. Drop a file or folder, read beautifully, edit, download.",
+  "scripts": {
+    "dev": "wrangler dev",
+    "deploy": "wrangler deploy",
+    "deploy:pages": "wrangler pages deploy public --project-name markread",
+    "serve": "python3 -m http.server 8787 --directory public"
+  },
+  "devDependencies": {
+    "wrangler": "^4.0.0"
+  }
+}

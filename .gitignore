@@ -1,0 +1,18 @@
+# dependencies (only wrangler — restore with `npm install`)
+node_modules/
+
+# wrangler / cloudflare
+.wrangler/
+.dev.vars
+.env
+.env.*
+
+# gstack local tooling
+.gstack/
+
+# os / editor cruft
+.DS_Store
+*.log
+Thumbs.db
+.idea/
+.vscode/

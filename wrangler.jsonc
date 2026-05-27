@@ -1,0 +1,22 @@
+{
+  // mdread — static site served from Cloudflare Workers Assets.
+  // No backend, no build step: the ./public folder IS the app.
+  //
+  // Forking? Change "name" to your own, and either remove the "routes"
+  // block (to use the free *.workers.dev URL) or point it at a domain you own.
+  // Your Cloudflare account is auto-selected on `wrangler deploy`; if you have
+  // more than one, set the CLOUDFLARE_ACCOUNT_ID environment variable.
+  "name": "mdread",
+  "compatibility_date": "2025-01-01",
+  // instant-access *.workers.dev URL (works while the custom-domain cert provisions)
+  "workers_dev": true,
+  "assets": {
+    "directory": "./public",
+    // unknown paths fall back to the app shell (this is a single-page app)
+    "not_found_handling": "single-page-application"
+  },
+  // custom domain — DNS is auto-managed since mdread.app is on this account
+  "routes": [
+    { "pattern": "mdread.app", "custom_domain": true }
+  ]
+}
