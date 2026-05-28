@@ -1,0 +1,120 @@
+/* ---------- The reading surface ---------- */
+.reading {
+  max-width: var(--measure);
+  margin: 0 auto;
+  padding: clamp(2.2rem, 5vw, 4.5rem) clamp(1.25rem, 5vw, 2rem) 38vh;
+  font-size: calc(1.2rem * var(--reading-scale));
+  line-height: 1.78;                 /* roomy leading for long sessions */
+  color: var(--ink);
+  font-variant-numeric: oldstyle-nums proportional-nums;
+  letter-spacing: .002em;
+  animation: docin .5s var(--ease) both;
+}
+@keyframes docin { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+
+.reading > * { animation: rise .5s var(--ease) both; }
+
+/* In split mode the preview re-renders on every keystroke; replaying the
+   entrance animations (docin/rise) makes it flash. Render instantly while editing. */
+.app[data-mode="split"] .reading,
+.app[data-mode="split"] .reading > * { animation: none; }
+
+.reading p { margin: 0 0 1.2em; hanging-punctuation: first allow-end; text-wrap: pretty; }
+.reading h1, .reading h2, .reading h3, .reading h4 {
+  font-family: var(--display); font-weight: 600; line-height: 1.18;
+  letter-spacing: -.006em; color: var(--ink);
+  margin: 1.9em 0 .55em; scroll-margin-top: 5rem; text-wrap: balance;
+}
+.reading h1 { font-size: 2.4em; line-height: 1.1; margin-top: .2em; letter-spacing: -.014em; }
+.reading h2 { font-size: 1.66em; margin-top: 1.8em; padding-bottom: .25em; border-bottom: 1px solid var(--line); }
+.reading h3 { font-size: 1.3em; }
+.reading h4 { font-size: 1.08em; font-weight: 700; }
+.reading h5, .reading h6 { font-family: var(--ui); font-size: .8em; letter-spacing: .06em; text-transform: uppercase; color: var(--ink-soft); margin: 2em 0 .5em; }
+
+/* anchor on heading hover */
+.reading .anchor {
+  opacity: 0; margin-left: .35em; color: var(--accent); text-decoration: none;
+  font-weight: 400; transition: opacity .15s;
+}
+.reading h1:hover .anchor, .reading h2:hover .anchor, .reading h3:hover .anchor, .reading h4:hover .anchor { opacity: .55; }
+
+/* drop cap */
+html[data-dropcap="on"] .reading > p:first-of-type::first-letter {
+  font-family: var(--display); font-weight: 540;
+  float: left; font-size: 3.4em; line-height: .72;
+  padding: .06em .12em 0 0; margin-top: .04em; color: var(--accent);
+}
+
+.reading a { color: var(--accent); text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 2.5px; text-decoration-color: var(--accent-soft); transition: text-decoration-color .15s; }
+.reading a:hover { text-decoration-color: var(--accent); }
+
+.reading strong { font-weight: 600; }
+.reading em { font-style: italic; }
+.reading del { color: var(--ink-faint); }
+.reading mark { background: var(--sel); padding: 0 .15em; border-radius: 3px; }
+
+.reading ul, .reading ol { margin: 0 0 1.15em; padding-left: 1.4em; }
+.reading li { margin: .3em 0; padding-left: .2em; }
+.reading li::marker { color: var(--ink-faint); }
+.reading ul ul, .reading ol ol, .reading ul ol, .reading ol ul { margin: .3em 0; }
+
+/* task lists */
+.reading li:has(> input[type=checkbox]) { list-style: none; margin-left: -1.2em; }
+.reading input[type=checkbox] {
+  appearance: none; -webkit-appearance: none;
+  width: 1.15em; height: 1.15em; flex: none;
+  border: 1.5px solid var(--line-2); border-radius: 5px;
+  margin-right: .5em; vertical-align: -.2em; background-color: var(--paper);
+  background-repeat: no-repeat; background-position: center; background-size: 78%;
+}
+.reading input[type=checkbox]:checked {
+  background-color: var(--accent); border-color: var(--accent);
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath fill='none' stroke='%23fff' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round' d='M3.5 8.5l3 3 6-7'/%3E%3C/svg%3E");
+}
+
+.reading blockquote {
+  margin: 1.5em 0; padding: .2em 0 .2em 1.3em;
+  border-left: 3px solid var(--accent-soft);
+  color: var(--ink-soft); font-style: italic;
+}
+.reading blockquote p { margin-bottom: .6em; }
+
+/* horizontal rule → asterism */
+.reading hr { border: none; text-align: center; margin: 2.6em 0; }
+.reading hr::before { content: "✶ ✶ ✶"; color: var(--ink-faint); letter-spacing: .6em; font-size: .8em; }
+
+.reading img { max-width: 100%; height: auto; border-radius: var(--radius); box-shadow: var(--shadow); margin: .4em 0; }
+
+/* inline code */
+.reading :not(pre) > code {
+  font-family: var(--mono); font-size: .85em;
+  background: var(--c-bg); padding: .12em .4em; border-radius: 5px;
+  color: var(--ink); border: 1px solid var(--line);
+}
+/* code blocks */
+.reading pre {
+  margin: 1.4em 0; padding: 1.05rem 1.2rem; overflow-x: auto;
+  background: var(--c-bg); border: 1px solid var(--line);
+  border-radius: var(--radius); box-shadow: var(--shadow);
+  font-size: .86em; line-height: 1.6;
+}
+.reading pre code { font-family: var(--mono); color: var(--ink); background: none; padding: 0; border: none; }
+
+/* tables */
+.reading table { width: 100%; border-collapse: collapse; margin: 1.5em 0; font-size: .92em; }
+.reading th, .reading td { padding: .55em .75em; border-bottom: 1px solid var(--line); text-align: left; }
+.reading thead th { font-family: var(--ui); font-size: .82em; letter-spacing: .03em; text-transform: uppercase; color: var(--ink-soft); border-bottom: 2px solid var(--line-2); }
+.reading tbody tr:hover { background: var(--paper-2); }
+
+/* footnotes / small */
+.reading sup a { text-decoration: none; }
+
+/* ---------- highlight.js (custom warm tokens) ---------- */
+.hljs-comment, .hljs-quote { color: var(--c-com); font-style: italic; }
+.hljs-keyword, .hljs-selector-tag, .hljs-literal, .hljs-section, .hljs-link { color: var(--c-kw); }
+.hljs-string, .hljs-attr, .hljs-template-tag, .hljs-addition { color: var(--c-str); }
+.hljs-number, .hljs-meta, .hljs-bullet, .hljs-symbol { color: var(--c-num); }
+.hljs-title, .hljs-name, .hljs-title.function_, .hljs-built_in { color: var(--c-fn); }
+.hljs-variable, .hljs-attribute, .hljs-tag, .hljs-template-variable, .hljs-type, .hljs-params { color: var(--c-var); }
+.hljs-punctuation, .hljs-operator { color: var(--c-punc); }
+.hljs-emphasis { font-style: italic; } .hljs-strong { font-weight: 700; }

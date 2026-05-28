@@ -2,14 +2,25 @@
   "name": "mdread",
   "version": "1.0.0",
   "private": true,
+  "type": "module",
   "description": "A local-first markdown reader you can host on Cloudflare. Drop a file or folder, read beautifully, edit, download.",
   "scripts": {
-    "dev": "wrangler dev",
-    "deploy": "wrangler deploy",
-    "deploy:pages": "wrangler pages deploy public --project-name markread",
-    "serve": "python3 -m http.server 8787 --directory public"
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "deploy": "vite build && wrangler deploy",
+    "deploy:prod": "vite build && wrangler deploy --env production",
+    "deploy:pages": "vite build && wrangler pages deploy dist --project-name markread"
   },
   "devDependencies": {
+    "sass": "^1.100.0",
+    "vite": "^8.0.14",
+    "vite-plugin-pwa": "^1.3.0",
     "wrangler": "^4.0.0"
+  },
+  "dependencies": {
+    "dompurify": "^3.4.7",
+    "highlight.js": "^11.11.1",
+    "marked": "^18.0.4"
   }
 }

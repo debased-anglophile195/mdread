@@ -1,0 +1,44 @@
+@use "vars" as *;
+
+/* ---------- Responsive ---------- */
+/* tap-to-close scrim behind the mobile sidebar */
+.scrim { position: fixed; inset: 0; z-index: 110; background: rgba(20,15,8,.4);
+  opacity: 0; pointer-events: none; transition: opacity .25s var(--ease); }
+.scrim.on { opacity: 1; pointer-events: auto; }
+
+@media (max-width: $bp-tablet) {
+  .app, .app[data-sidebar="hidden"] { grid-template-columns: 1fr; }
+  /* sidebar becomes a slide-over panel */
+  .sidebar {
+    position: fixed; top: 0; bottom: 0; left: 0; z-index: 120;
+    width: min(84vw, 19rem);
+    transform: translateX(0); opacity: 1;
+    transition: transform .25s var(--ease); box-shadow: var(--shadow);
+  }
+  .app[data-sidebar="hidden"] .sidebar { transform: translateX(-102%); opacity: 1; pointer-events: none; }
+
+  /* split stacks vertically */
+  .app[data-mode="split"] .panes { grid-template-columns: 1fr; grid-template-rows: 1fr 1fr; }
+  .app[data-mode="split"] .reading-scroll { border-left: none; border-top: 1px solid var(--line); }
+
+  /* trim the top bar so actions fit on a phone */
+  .topbar { padding: .5rem .55rem; gap: .35rem; }
+  .topbar__actions { gap: .15rem; }
+  .icon-btn { width: 1.95rem; height: 1.95rem; }
+  #tocBtn, #focusBtn { display: none; }
+  .doc-meta__sub { display: none; }
+  .seg button { padding: .3rem .55rem; }
+
+  .toc { display: none !important; }
+  .welcome { inset: 3.1rem 0 0; padding: 1.25rem; }
+  .welcome__features { grid-template-columns: 1fr; max-width: 26rem; gap: .7rem; }
+  .welcome__title { font-size: clamp(1.7rem, 8vw, 2.3rem); }
+  .welcome__lede { font-size: .98rem; }
+  .reading { padding-top: 1.8rem; }
+}
+
+@media (max-width: $bp-phone) {
+  .src-btn span { display: none; }   /* icon-only source buttons on tiny screens */
+  .src-btn { padding: .5rem; }
+  .seg button { font-size: .66rem; padding: .3rem .45rem; }
+}

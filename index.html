@@ -22,11 +22,9 @@
   <meta name="twitter:title" content="mdread — a quiet reading room for markdown" />
   <meta name="twitter:description" content="Privacy-first, local-first. Drop a file or a folder, read beautifully, edit, and download — all on your device." />
   <meta name="twitter:image" content="https://mdread.app/og-image.png?v=2" />
-  <link rel="manifest" href="./manifest.webmanifest" />
-  <link rel="icon" href="./icons/icon.svg" type="image/svg+xml" />
-  <link rel="apple-touch-icon" href="./icons/icon.svg" />
-
-  <link rel="stylesheet" href="./styles.css" />
+  <link rel="manifest" href="/manifest.webmanifest" />
+  <link rel="icon" href="/icons/icon.svg" type="image/svg+xml" />
+  <link rel="apple-touch-icon" href="/icons/icon.svg" />
 </head>
 <body>
   <!-- reading progress (pinned to viewport top) -->
@@ -260,9 +258,6 @@
   <input type="file" id="dirFallback" webkitdirectory directory multiple hidden />
   <input type="file" id="fileFallback" accept=".md,.markdown,.mdown,.mkd,.mkdn,.mdwn,.mdx,.txt,text/markdown,text/plain" multiple hidden />
 
-  <script src="./vendor/marked.min.js" defer></script>
-  <script src="./vendor/purify.min.js" defer></script>
-  <script src="./vendor/highlight.min.js" defer></script>
-  <script src="./app.js" type="module"></script>
+  <script type="module" src="/src/main.js"></script>
 </body>
 </html>

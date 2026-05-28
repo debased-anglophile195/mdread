@@ -6,6 +6,8 @@ your files never leave your device. Deploys to Cloudflare in one command.
 
 🔗 **Live: [mdread.app](https://mdread.app)** · MIT licensed · no backend · no tracking
 
+[![Deploy to Cloudflare](https://deploy.workers.cloudflare.com/button)](https://deploy.workers.cloudflare.com/?url=https://github.com/techjewel/mdread)
+
 ![mdread](public/og-image.png)
 
 ## What it does
@@ -25,24 +27,24 @@ your files never leave your device. Deploys to Cloudflare in one command.
 - 🧠 **Remembers** your last folder, your last document, your reading position, and your
   preferences across visits.
 
-Everything is static HTML/CSS/JS with three small vendored libraries
+Everything runs client-side with three small markdown libraries
 ([marked](https://marked.js.org), [DOMPurify](https://github.com/cure53/DOMPurify),
-[highlight.js](https://highlightjs.org)) and **system fonts only** — no external
-requests at all. **No build step.**
+[highlight.js](https://highlightjs.org)) bundled and self-hosted, and **system fonts
+only** — no external requests at runtime.
 
-## Run locally
-
-Any static file server works. The simplest:
-
-```bash
-npm run serve        # python3 -m http.server on :8787, serving ./public
-```
-
-…then open <http://localhost:8787>. Or, with Wrangler (mirrors production):
+## Develop locally
 
 ```bash
 npm install
-npm run dev          # wrangler dev
+npm run dev          # Vite dev server with hot reload → http://localhost:5173
+```
+
+Edit anything under `src/` and the page reloads. To check a production build the
+way it's actually deployed:
+
+```bash
+npm run build        # bundles + compiles SCSS into ./dist
+npm run preview      # serves ./dist → http://localhost:4173
 ```
 
 > **Note on editing:** live "save to disk" needs the File System Access API
@@ -51,24 +53,44 @@ npm run dev          # wrangler dev
 
 ## Deploy to Cloudflare
 
-Two ways — pick one.
+### One-click (no CLI)
 
-### Workers (recommended, uses `wrangler.jsonc`)
+[![Deploy to Cloudflare](https://deploy.workers.cloudflare.com/button)](https://deploy.workers.cloudflare.com/?url=https://github.com/techjewel/mdread)
+
+Cloudflare clones this repo into your own GitHub, runs `npm run build`, and deploys
+to a free `*.workers.dev` URL on your account. Every push to your copy then
+auto-builds and deploys via Workers Builds. (The `mdread.app` custom domain lives in
+the `production` environment, which the button doesn't use — you get your own URL.)
+
+### From the CLI
+
+Both paths below build first, then publish `./dist`.
+
+#### Workers (recommended, uses `wrangler.jsonc`)
 
 ```bash
 npm install
-npx wrangler login
-npm run deploy       # wrangler deploy → serves ./public from Workers Assets
+npx wrangler login   # or set CLOUDFLARE_ACCOUNT_ID for non-interactive / CI deploys
+npm run deploy       # → a free *.workers.dev URL (what a fork gets out of the box)
+npm run deploy:prod  # → your custom domain (uses the `production` env in wrangler.jsonc)
 ```
 
-### Cloudflare Pages
+`wrangler.jsonc` doesn't hardcode an account or domain: the account comes from
+`wrangler login` (or `CLOUDFLARE_ACCOUNT_ID`). The base config publishes to
+`*.workers.dev`; the `env.production` block carries the custom domain, so
+`deploy:prod` is the one that goes live on a real domain. To use your own domain,
+change `name` and the `pattern` under `env.production.routes`.
+
+#### Cloudflare Pages
 
 ```bash
-npx wrangler pages deploy public --project-name markread
+npm run build
+npx wrangler pages deploy dist --project-name markread
+# or: npm run deploy:pages
 ```
 
-…or in the Cloudflare dashboard: **Pages → Create → Direct upload**, and drag in the
-`public/` folder. No build command, output directory `public`.
+…or in the Cloudflare dashboard: **Pages → Create → Connect/Direct upload**. Build
+command `npm run build`, output directory `dist`.
 
 ## Keyboard shortcuts
 
@@ -86,28 +108,33 @@ npx wrangler pages deploy public --project-name markread
 ## Project layout
 
 ```
-public/
-  index.html      app shell
-  styles.css      the design (three themes, typography, layout)
-  app.js          all logic: files, rendering, editing, persistence
-  sw.js           service worker (offline)
-  manifest.webmanifest
-  icons/icon.svg
-  vendor/         marked · DOMPurify · highlight.js (vendored for offline)
-wrangler.jsonc    Cloudflare Workers Assets config
+index.html            app shell (Vite entry)
+src/
+  main.js             entry: imports styles, wires the UI, boots the app
+  modules/            one concern per file — files, tree, document, editor,
+                      save, markdown, recents, scroll, view, ui, keyboard, …
+  styles/             SCSS partials assembled by main.scss (themes, typography, layout)
+public/               static assets copied verbatim: icons, manifest, og-image
+vite.config.js        build + PWA service-worker config
+wrangler.jsonc        Cloudflare Workers Assets config (serves ./dist)
 ```
+
+No framework — plain ES modules and SCSS. The service worker is generated by
+`vite-plugin-pwa`. See [`CLAUDE.md`](CLAUDE.md) for an architecture tour and
+[`CONTRIBUTING.md`](CONTRIBUTING.md) to get started.
 
 ## Privacy
 
-There is no server, no analytics, and **no external requests** — not even web
-fonts (the app uses your operating system's native fonts). Files are read in your
-browser; the only persistence is local (IndexedDB stores folder handles so they
-can be reopened; `localStorage` stores preferences and reading positions).
+There is no server, no analytics, and **no external requests at runtime** — not
+even web fonts (the app uses your operating system's native fonts). Files are read
+in your browser; the only persistence is local (IndexedDB stores folder handles so
+they can be reopened; `localStorage` stores preferences and reading positions).
 
 ## Contributing
 
-Issues and PRs welcome. The whole app is three files in `public/` — `index.html`,
-`styles.css`, `app.js` — with no build step, so you can edit and refresh.
+Issues and PRs welcome — see [`CONTRIBUTING.md`](CONTRIBUTING.md) and the
+[`Code of Conduct`](CODE_OF_CONDUCT.md). The app is plain ES modules in `src/modules/`
+and SCSS in `src/styles/`, so it's quick to find your way around.
 
 ## License
 

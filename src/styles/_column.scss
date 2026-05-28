@@ -1,0 +1,61 @@
+/* ================= Main / reading column ================= */
+.main { position: relative; min-width: 0; display: flex; flex-direction: column; height: 100dvh; }
+
+.topbar {
+  display: flex; align-items: center; gap: .75rem;
+  padding: .55rem .9rem .55rem 1.1rem;
+  border-bottom: 1px solid var(--line);
+  background: color-mix(in srgb, var(--paper) 86%, transparent);
+  backdrop-filter: blur(8px);
+  z-index: 30;
+}
+.topbar__expand { color: var(--ink-soft); }
+.doc-meta { flex: 1; min-width: 0; display: flex; flex-direction: column; line-height: 1.15; }
+.doc-meta__name {
+  font-family: var(--display); font-weight: 520; font-size: 1.02rem;
+  letter-spacing: -.01em; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+}
+.doc-meta__sub { font-family: var(--ui); font-size: .66rem; color: var(--ink-faint); letter-spacing: .03em; margin-top: .12rem; }
+
+.topbar__actions { display: flex; align-items: center; gap: .35rem; }
+
+.icon-btn {
+  width: 2.05rem; height: 2.05rem; border-radius: 8px;
+  display: grid; place-items: center; color: var(--ink-soft);
+  transition: .16s var(--ease);
+}
+.icon-btn:hover { color: var(--ink); background: var(--paper-2); }
+.icon-btn.is-on { color: var(--accent); background: var(--accent-soft); }
+
+.seg { display: inline-flex; padding: 2px; border: 1px solid var(--line-2); border-radius: 8px; background: var(--paper-2); }
+.seg button {
+  padding: .28rem .6rem; border-radius: 6px;
+  font-family: var(--ui); font-size: .7rem; letter-spacing: .02em; color: var(--ink-faint);
+  transition: .16s var(--ease);
+}
+.seg button:hover { color: var(--ink); }
+.seg button.is-on { background: var(--paper); color: var(--ink); box-shadow: var(--shadow); }
+.seg--wide button { flex: 1; padding: .35rem .8rem; }
+
+/* panes */
+.panes { flex: 1; min-height: 0; display: grid; grid-template-columns: 1fr; }
+.app[data-mode="split"] .panes { grid-template-columns: 1fr 1fr; }
+
+.reading-scroll { overflow-y: auto; scroll-behavior: smooth; height: 100%; }
+.app[data-mode="edit"] .reading-scroll { display: none; }
+.app[data-mode="split"] .reading-scroll { border-left: 1px solid var(--line); order: 2; }
+
+.editor-pane { display: none; height: 100%; min-height: 0; }
+.app[data-mode="edit"] .editor-pane,
+.app[data-mode="split"] .editor-pane { display: block; }
+
+.editor {
+  display: block; width: 100%; height: 100%; resize: none; border: none; outline: none;
+  background: var(--paper); color: var(--ink);
+  font-family: var(--mono); font-size: 1.01rem; line-height: 1.85;
+  padding: clamp(2rem, 5vh, 3.5rem) clamp(1.25rem, 5vw, 2rem) 42vh;
+  max-width: 50rem; margin: 0 auto; tab-size: 2;
+  caret-color: var(--accent);
+}
+.app[data-mode="split"] .editor { font-size: .95rem; }
+.editor::placeholder { color: var(--ink-faint); }

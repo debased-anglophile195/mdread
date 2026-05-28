@@ -1,0 +1,16 @@
+// mdread styles. Order matters — these @use rules are emitted in sequence, so
+// later partials (focus mode, responsive overrides) win the cascade as before.
+//
+// Note: the design's runtime-tunable values stay as CSS custom properties in
+// _tokens.scss (app.js reads/writes them); _vars.scss holds only build-time
+// Sass values like breakpoints that compile away.
+
+@use "tokens";
+@use "base";
+@use "sidebar";
+@use "column";
+@use "reading";
+@use "toc";
+@use "welcome";
+@use "components";
+@use "responsive";

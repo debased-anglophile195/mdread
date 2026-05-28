@@ -1,0 +1,72 @@
+/* ================= Dropzone ================= */
+.dropzone {
+  position: fixed; inset: 0; z-index: 200;
+  display: none; place-items: center;
+  background: color-mix(in srgb, var(--paper) 72%, transparent);
+  backdrop-filter: blur(6px);
+}
+.dropzone.is-active { display: grid; }
+.dropzone__card {
+  display: grid; place-items: center; gap: .8rem;
+  padding: 3.5rem 4.5rem; border-radius: 18px;
+  border: 2px dashed var(--accent); color: var(--accent);
+  background: var(--paper);
+  font-family: var(--ui); font-size: .9rem; letter-spacing: .04em;
+  animation: pop .25s var(--ease) both;
+}
+@keyframes pop { from { transform: scale(.96); opacity: 0; } to { transform: none; opacity: 1; } }
+
+/* ================= Popover ================= */
+.popover {
+  position: fixed; z-index: 80;
+  width: 19rem; padding: 1rem 1.1rem;
+  background: var(--surface); border: 1px solid var(--line-2);
+  border-radius: 14px; box-shadow: var(--shadow);
+  display: flex; flex-direction: column; gap: .85rem;
+  animation: pop .18s var(--ease) both;
+}
+.popover__row { display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
+.popover__row--toggle { }
+.popover__label { font-family: var(--ui); font-size: .72rem; color: var(--ink-soft); letter-spacing: .02em; white-space: nowrap; }
+.popover input[type=range] {
+  -webkit-appearance: none; appearance: none; height: 3px; border-radius: 3px;
+  background: var(--line-2); flex: 1; max-width: 9.5rem;
+}
+.popover input[type=range]::-webkit-slider-thumb { -webkit-appearance: none; width: 15px; height: 15px; border-radius: 50%; background: var(--accent); border: 2px solid var(--paper); box-shadow: 0 0 0 1px var(--line-2); cursor: pointer; }
+.popover input[type=range]::-moz-range-thumb { width: 15px; height: 15px; border: 2px solid var(--paper); border-radius: 50%; background: var(--accent); cursor: pointer; }
+
+.toggle { width: 2.5rem; height: 1.4rem; border-radius: 99px; background: var(--line-2); position: relative; transition: .18s var(--ease); }
+.toggle span { position: absolute; top: 2px; left: 2px; width: 1.05rem; height: 1.05rem; border-radius: 50%; background: var(--paper); transition: .18s var(--ease); }
+.toggle[aria-checked="true"] { background: var(--accent); }
+.toggle[aria-checked="true"] span { transform: translateX(1.1rem); }
+
+/* ================= Toast ================= */
+.toast {
+  position: fixed; bottom: 1.4rem; left: 50%; transform: translateX(-50%) translateY(10px);
+  z-index: 300; padding: .6rem 1.05rem; border-radius: 10px;
+  background: var(--ink); color: var(--paper);
+  font-family: var(--ui); font-size: .76rem; letter-spacing: .01em;
+  box-shadow: var(--shadow); opacity: 0; transition: .22s var(--ease);
+}
+.toast.is-show { opacity: 1; transform: translateX(-50%) translateY(0); }
+
+/* ================= Focus mode ================= */
+.app[data-focus="on"] { grid-template-columns: 0 1fr; }
+.app[data-focus="on"] .sidebar { opacity: 0; pointer-events: none; }
+.app[data-focus="on"] .topbar { opacity: 0; transform: translateY(-100%); pointer-events: none; transition: .3s var(--ease); }
+.app[data-focus="on"] .panes { padding-top: 0; }
+.app[data-focus="on"] .reading { padding-top: clamp(3rem, 9vh, 7rem); }
+.app[data-focus="on"] .toc { display: none; }
+/* reveal a thin exit hint */
+.focus-exit {
+  position: fixed; top: 1rem; right: 1rem; z-index: 50;
+  font-family: var(--ui); font-size: .68rem; color: var(--ink-faint);
+  opacity: 0; transition: opacity .2s; pointer-events: none;
+}
+.app[data-focus="on"] .focus-exit { opacity: .6; }
+
+/* ---------- animations ---------- */
+@keyframes rise { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation: none !important; transition-duration: .01ms !important; scroll-behavior: auto !important; }
+}

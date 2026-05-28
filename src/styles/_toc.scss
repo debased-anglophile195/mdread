@@ -1,0 +1,28 @@
+@use "vars" as *;
+
+/* ================= TOC rail ================= */
+.toc {
+  position: absolute; top: 3.4rem; right: 0; width: var(--toc-w);
+  height: calc(100dvh - 3.4rem); overflow-y: auto;
+  padding: 1.4rem 1.2rem 4rem .4rem;
+  opacity: 0; transform: translateX(8px); pointer-events: none;
+  transition: opacity .25s var(--ease), transform .25s var(--ease);
+}
+.app[data-toc="on"][data-mode="read"] .toc { opacity: 1; transform: none; pointer-events: auto; }
+/* the floating TOC rail only makes sense over the single reading column */
+.app:not([data-mode="read"]) .toc { display: none; }
+@media (min-width: $bp-toc) {
+  .app[data-toc="on"][data-mode="read"] .reading { margin-right: calc(var(--toc-w) - 2rem); }
+}
+.toc__head { font-family: var(--ui); font-size: .66rem; letter-spacing: .12em; text-transform: uppercase; color: var(--ink-faint); margin-bottom: .7rem; }
+.toc__list { display: flex; flex-direction: column; gap: .1rem; border-left: 1px solid var(--line); }
+.toc__list a {
+  display: block; padding: .2rem .7rem; margin-left: -1px;
+  border-left: 2px solid transparent;
+  color: var(--ink-faint); text-decoration: none; font-size: .78rem; line-height: 1.35;
+  transition: .15s var(--ease);
+}
+.toc__list a:hover { color: var(--ink); }
+.toc__list a.lvl-3 { padding-left: 1.4rem; font-size: .74rem; }
+.toc__list a.lvl-4 { padding-left: 2rem; font-size: .72rem; }
+.toc__list a.is-active { color: var(--accent); border-left-color: var(--accent); }

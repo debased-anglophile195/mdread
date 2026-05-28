@@ -1,0 +1,7 @@
+// Sass build-time variables (compiled away — not emitted as CSS custom props).
+// Runtime-tunable values (themes, reading scale, measure) intentionally stay as
+// CSS custom properties in _tokens.scss because app.js reads and writes them.
+
+$bp-toc: 1180px; // wide enough to float the TOC rail beside the text
+$bp-tablet: 820px; // sidebar collapses into a slide-over below this
+$bp-phone: 420px; // icon-only source buttons below this
